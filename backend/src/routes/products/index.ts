@@ -20,30 +20,36 @@ export const routerProducts = express.Router();
 routerProducts.post(
   "/products",
   [
-    validateJWT,
     ...productsValidations,
     validateEmptyFileds,
     validateNameProduct,
+    validateJWT,
     validateProductExist,
   ],
   create
 );
 routerProducts.get("/products", [validateJWT], getAll);
+
 routerProducts.get(
   "/products/:id",
-  [validateJWT],
+  validateJWT,
   validateObjectIds(["id"]),
   getById
 );
+
 routerProducts.put(
   "/products/:id",
-  [validateJWT],
+  ...productsValidations,
+  validateEmptyFileds,
+  validateNameProduct,
+  validateJWT,
+  validateProductExist,
   validateObjectIds(["id"]),
   update
 );
 routerProducts.delete(
   "/products/:id",
-  [validateJWT],
+  validateJWT,
   validateObjectIds(["id"]),
   Delete
 );
