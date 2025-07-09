@@ -41,7 +41,6 @@ routerProducts.put(
   "/products/:id",
   ...productsValidations,
   validateEmptyFileds,
-  validateNameProduct,
   validateJWT,
   validateProductExist,
   validateObjectIds(["id"]),
