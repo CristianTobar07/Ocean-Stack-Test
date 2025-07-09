@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { userModel, UserType } from "../models/users";
+import { userModel, UserType } from "../../models/users";
 
 export const validateName = (
   req: Request,
@@ -7,12 +7,12 @@ export const validateName = (
   next: NextFunction
 ) => {
   const name = req.body.name;
-  const regexname = /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\s]{4,50}$/;
+  const regexname = /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\s]{3,50}$/;
 
   if (!regexname.test(name)) {
     return res.status(400).json({
       status: false,
-      msg: "El nombre no puede contener caracteres especiales",
+      msg: "El nombre de usuario no puede contener caracteres especiales, debe tener entre 3 y 50 caracteres",
     });
   }
 

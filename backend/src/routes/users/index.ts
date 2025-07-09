@@ -1,13 +1,14 @@
 import express from "express";
 import { UsersController } from "../../controllers/users";
-import { validateEmptyFileds } from "../../middlewares/validate-fields";
+import { validateEmptyFileds } from "../../middlewares/common/validate-fields";
 import {
   validateEmailExist,
   validateName,
   validatePassword,
   validateTypeUser,
-} from "../../middlewares/user-validation";
+} from "../../middlewares/users/user-validation";
 import { registerUserValidations } from "../../validations/auth/auth-validation";
+import { validateJWT } from "../../middlewares/auth/validate-jwt";
 
 export const routerUsers = express.Router();
 
@@ -23,4 +24,4 @@ routerUsers.post(
   ],
   UsersController.createUser
 );
-routerUsers.get("/user/:id", UsersController.getUserById);
+routerUsers.get("/user/:id", [validateJWT], UsersController.getUserById);
