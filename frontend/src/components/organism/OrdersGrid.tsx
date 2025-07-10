@@ -24,7 +24,7 @@ const OrdersGrid: React.FC<Props> = ({ orders, handleShowProducts }) => (
       {orders.length > 0 ? (
         <>
           {orders.map((orders, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={orders.uid}>
+            <Grid key={orders.uid}>
               <OrderCard
                 order={orders}
                 index={index + 1}

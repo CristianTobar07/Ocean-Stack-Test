@@ -37,7 +37,7 @@ const ProductGrid: React.FC<Props> = ({
       {products.length > 0 ? (
         <>
           {products.map((product) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={product.uid}>
+            <Grid key={product.uid}>
               {categorie === 1 ? (
                 <ProductCard
                   product={product}

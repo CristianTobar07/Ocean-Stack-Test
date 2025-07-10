@@ -15,7 +15,7 @@ const productsOfOrderOfOrder = () => {
         {productsOfOrder.length > 0 ? (
           <>
             {productsOfOrder.map((product) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={product.uid}>
+              <Grid key={product.uid}>
                 <ProductCard
                   product={product}
                   onAdd={() => {}}
