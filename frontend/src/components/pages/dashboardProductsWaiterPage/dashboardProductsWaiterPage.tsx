@@ -19,7 +19,7 @@ const dashboardProductsWaiterPage = () => {
   );
 
   useEffect(() => {
-    if (products.length === 0 || isRealoadNeeded) {
+    if (products.length === 0 && isRealoadNeeded) {
       dispatch(getAllProducts());
     }
   }, [dispatch, isRealoadNeeded, products]);

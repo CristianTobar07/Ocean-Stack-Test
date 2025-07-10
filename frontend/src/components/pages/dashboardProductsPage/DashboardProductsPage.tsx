@@ -16,10 +16,10 @@ const DashboardProductsPage = () => {
   });
 
   useEffect(() => {
-    if (products.length === 0 || isRealoadNeeded) {
+    if (isRealoadNeeded) {
       dispatch(getAllProducts());
     }
-  }, [dispatch, isRealoadNeeded, products]);
+  }, [dispatch, isRealoadNeeded]);
 
   const handleAddProduct = (product: Product) => {
     dispatch(setAddProduct(product));

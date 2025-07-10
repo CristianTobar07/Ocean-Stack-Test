@@ -27,16 +27,16 @@ const dashboardOrdersWaiterPage = () => {
   );
 
   useEffect(() => {
-    if (orders.length === 0 || isRealoadNeeded) {
+    if (isRealoadNeeded) {
       dispatch(getAllOrders());
     }
-  }, [dispatch, isRealoadNeeded, orders]);
+  }, [dispatch, isRealoadNeeded]);
 
   useEffect(() => {
-    if (!dataUser || isReloadNeededAuth) {
+    if (isReloadNeededAuth) {
       dispatch(getDataUser());
     }
-  }, [dispatch, isReloadNeededAuth, dataUser]);
+  }, [dispatch, isReloadNeededAuth]);
 
   const handleCloseModal = () => {
     dispatch(setIsModalProducts(false));
