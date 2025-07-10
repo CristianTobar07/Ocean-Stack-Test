@@ -11,6 +11,8 @@ services:
       - ./backend:/app
     networks:
       - oceans_stack
+    env_file:
+      - ./backend/.env
 
   frontend:
     build:
