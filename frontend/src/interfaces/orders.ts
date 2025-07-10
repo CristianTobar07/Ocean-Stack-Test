@@ -1,3 +1,5 @@
+import { Product } from "./products";
+
 export interface RequestOrder {
   products: ProductsOrder[];
 }
@@ -18,12 +20,17 @@ export interface ResponseGetAllOrders {
 }
 
 export interface Order {
-  products: Product[];
+  products: DataProduct[];
   date: Date;
   uid: string;
 }
 
-export interface Product {
+export interface DataProduct {
   uid: string;
   quantity: number;
+}
+
+export interface ResponseGetOrderByID {
+  status: string;
+  data: Product[];
 }

@@ -7,7 +7,6 @@ import {
   ProductFormType,
   ResponseGetAllProducts,
 } from "interfaces/products";
-import { ProductsOrder, ResponseOrder } from "interfaces/orders";
 
 type InitialState = {
   isRealoadNeeded: boolean;
@@ -101,20 +100,3 @@ export const createProduct =
       return false;
     }
   };
-
-export const createOrder = (): AppThunk => async (dispatch, getState) => {
-  const idProcess: string = dispatch(displayLoader());
-  try {
-    const newProducts = getState().products.productsAdded;
-    const productsOrder: ProductsOrder[] = newProducts.map((product) => ({
-      uid: product.uid,
-      quantity: product.quantity,
-    }));
-    const response: ResponseOrder = await Api.createOrder(productsOrder);
-    dispatch(removeProcess(idProcess));
-    return response;
-  } catch (error: any) {
-    dispatch(removeProcess(idProcess));
-    return false;
-  }
-};

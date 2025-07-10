@@ -2,11 +2,8 @@ import DashboardLayout from "components/templates/DashboardLayout";
 import { Product } from "interfaces/products";
 import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "store/hooks";
-import {
-  createOrder,
-  resetProductsAdded,
-  setDeleteProduct,
-} from "store/slices/products";
+import { createOrder } from "store/slices/orders";
+import { resetProductsAdded, setDeleteProduct } from "store/slices/products";
 import { RootState } from "store/store";
 
 const DashboardProductsAddedPage = () => {

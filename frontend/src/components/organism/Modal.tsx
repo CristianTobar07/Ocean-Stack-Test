@@ -30,7 +30,9 @@ export const ReusableModal: React.FC<ReusableModalProps> = ({
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancelar</Button>
+        <Button sx={{ color: "#7c4dff" }} onClick={onClose}>
+          Cancelar
+        </Button>
         {onConfirm && (
           <Button variant="contained" onClick={onConfirm}>
             {confirmText}

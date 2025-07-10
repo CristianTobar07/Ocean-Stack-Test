@@ -12,7 +12,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { Product, ProductFormType } from "interfaces/products";
 import Sidebar from "components/organism/SideBar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "routes/constants";
 import UserCreateProduct from "components/organism/userCreateProducts";
 import OrdersGrid from "components/organism/OrdersGrid";
@@ -22,6 +22,7 @@ import { DataUser } from "interfaces/auth";
 import { useAppDispatch } from "store/hooks";
 import toast from "react-hot-toast";
 import { createProduct, setReloadProducts } from "store/slices/products";
+import { getOrderById, setIsModalProducts } from "store/slices/orders";
 
 interface Props {
   products?: Product[];
@@ -38,8 +39,11 @@ const DashboardWaiterLayout: React.FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [openModalProductsOfOrder, setopenModalProductsOfOrder] =
+    useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -70,6 +74,16 @@ const DashboardWaiterLayout: React.FC<Props> = ({
     setOpenModal(false);
     toast.success(res.msg);
     dispatch(setReloadProducts());
+  };
+
+  const handleShowProducts = async (order: Order) => {
+    const res: any = await dispatch(getOrderById(order.uid));
+    if (!res.status) {
+      toast.error(res.msg);
+      return;
+    }
+
+    dispatch(setIsModalProducts(true));
   };
 
   const drawer = (
@@ -142,17 +156,22 @@ const DashboardWaiterLayout: React.FC<Props> = ({
           width: { md: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <UserCreateProduct
-          userName={dataUser.name}
-          buttonName={"Crear nuevo producto"}
-          handleCreateProduct={handleProduct}
-          setModal={setOpenModal}
-          openModal={openModal}
-        />
+        {location.pathname === ROUTES.WAITER_PRODUCTS_PAGE && (
+          <UserCreateProduct
+            userName={dataUser.name}
+            buttonName={"Crear nuevo producto"}
+            handleCreateProduct={handleProduct}
+            setModal={setOpenModal}
+            openModal={openModal}
+          />
+        )}
+
         {products && (
           <ProductGrid products={products} categorie={1} disableAdd={true} />
         )}
-        {orders && <OrdersGrid orders={orders} handleShowProducts={() => {}} />}
+        {orders && (
+          <OrdersGrid orders={orders} handleShowProducts={handleShowProducts} />
+        )}
       </Box>
     </Box>
   );

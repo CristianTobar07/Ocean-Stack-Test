@@ -42,7 +42,7 @@ const create = async (
     const product = await productsModel.create(body);
     res
       .status(201)
-      .json({ status: "true", msg: "Product created", data: product });
+      .json({ status: true, msg: "Product created", data: product });
   } catch (err) {
     next(err);
     return res.status(500).json({ status: false, msg: "Error interno" });
@@ -60,10 +60,10 @@ const update = async (
     const data = await productsModel.findByIdAndUpdate(uid, body);
 
     if (data === null) {
-      res.status(404).json({ status: "false", msg: "Producto no encontrado" });
+      res.status(404).json({ status: false, msg: "Producto no encontrado" });
     } else {
       res.status(201).json({
-        status: "false",
+        status: false,
         msg: "Producto actualizado exitosamente",
         data: { ...body, uid: data.id },
       });
@@ -82,11 +82,11 @@ const Delete = async (req: Request, res: Response, next: NextFunction) => {
     console.log({ data });
 
     if (data === null) {
-      res.status(404).json({ status: "false", msg: "Producto no encontrado" });
+      res.status(404).json({ status: false, msg: "Producto no encontrado" });
     } else {
       res
         .status(201)
-        .json({ status: "true", msg: "Producto eliminado exitosamente" });
+        .json({ status: true, msg: "Producto eliminado exitosamente" });
     }
   } catch (err) {
     next(err);

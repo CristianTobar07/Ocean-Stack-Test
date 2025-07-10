@@ -23,10 +23,11 @@ const OrdersGrid: React.FC<Props> = ({ orders, handleShowProducts }) => (
     <Grid container spacing={2} sx={{ m: 0, p: 4 }}>
       {orders.length > 0 ? (
         <>
-          {orders.map((orders) => (
+          {orders.map((orders, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={orders.uid}>
               <OrderCard
                 order={orders}
+                index={index + 1}
                 onAdd={() => handleShowProducts(orders)}
               />
             </Grid>

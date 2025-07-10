@@ -20,12 +20,12 @@ export class UsersController {
     try {
       const token = req.header("access-token");
       if (!token) {
-        return res.status(401).json({ status: "false", msg: "No autorizado" });
+        return res.status(401).json({ status: false, msg: "No autorizado" });
       }
       const dataUser: any = jwt.decode(token);
 
       if (!dataUser) {
-        return res.status(401).json({ status: "false", msg: "No autorizado" });
+        return res.status(401).json({ status: false, msg: "No autorizado" });
       }
 
       const data = await userModel.findById(dataUser.uid);
