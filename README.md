@@ -80,7 +80,7 @@ Oceans-stacks-Test
 └── README.md
 
 ## 👨‍💻 Autor
-Cristian Andrés Tobar
+Cristian Andrés Tobar -
 Desarrollador Full Stack
 
 
