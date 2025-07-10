@@ -13,23 +13,35 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Product } from "interfaces/products";
 import Sidebar from "components/organism/SideBar";
 import ProductGrid from "components/organism/ProductsGrid";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "routes/constants";
+import { useAppSelector } from "store/hooks";
+import { RootState } from "store/store";
 
 interface Props {
   products: Product[];
-  onAdd: (product: Product) => void;
+  onAddDelete: (product: Product) => void;
+  handleAddOrder?: () => void;
 }
 
 const drawerWidth = 300;
 
-const DashboardLayout: React.FC<Props> = ({ products, onAdd }) => {
+const DashboardLayout: React.FC<Props> = ({
+  products,
+  onAddDelete,
+  handleAddOrder,
+}) => {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const categories = ["Productos", "Agregados"];
+  const location = useLocation();
+
+  const { totalToPay } = useAppSelector((state: RootState) => {
+    return state.products;
+  });
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -112,7 +124,13 @@ const DashboardLayout: React.FC<Props> = ({ products, onAdd }) => {
           width: { md: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <ProductGrid products={products} onAdd={onAdd} />
+        <ProductGrid
+          products={products}
+          handleAddDelete={onAddDelete}
+          categorie={location.pathname === ROUTES.PRODUCTS_PAGE ? 1 : 2}
+          totalToPay={totalToPay}
+          handleCreateBuy={handleAddOrder}
+        />
       </Box>
     </Box>
   );

@@ -1,8 +1,9 @@
 import DashboardLayout from "components/templates/DashboardLayout";
 import { Product } from "interfaces/products";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "store/hooks";
-import { getAllProducts } from "store/slices/products";
+import { getAllProducts, setAddProduct } from "store/slices/products";
 import { RootState } from "store/store";
 
 const allProducts: Product[] = [];
@@ -20,24 +21,12 @@ const DashboardProductsPage = () => {
     }
   }, [dispatch, isRealoadNeeded, products]);
 
-
-
   const handleAddProduct = (product: Product) => {
-    
+    dispatch(setAddProduct(product));
+    toast.success("Producto agregado correctamente");
   };
 
-  const handleCategorySelect = (category: string) => {
-   
-  };
-
-  return (
-    <DashboardLayout
-      categories={["Productos", "Agregados"]}
-      products={products}
-      onAdd={handleAddProduct}
-      onCategorySelect={handleCategorySelect}
-    />
-  );
+  return <DashboardLayout products={products} onAddDelete={handleAddProduct} />;
 };
 
 export default DashboardProductsPage;

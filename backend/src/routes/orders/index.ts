@@ -10,7 +10,7 @@ export const routerorders = express.Router();
 
 routerorders.post(
   "/orders",
-  [...ordersValidations, validateEmptyFileds, validateJWT],
+  [...ordersValidations, validateEmptyFileds],
   create
 );
 

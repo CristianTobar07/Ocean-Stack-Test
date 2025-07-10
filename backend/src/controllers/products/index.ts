@@ -3,7 +3,7 @@ import { productsModel, ProductsType } from "../../models/products";
 
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = await productsModel.find();
+    const data = await productsModel.find({ quantity: { $gt: 0 } });
     res.status(200).json({ data: data, status: true });
   } catch (err) {
     next(err);
