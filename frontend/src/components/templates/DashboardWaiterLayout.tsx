@@ -12,36 +12,29 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { Product } from "interfaces/products";
 import Sidebar from "components/organism/SideBar";
-import ProductGrid from "components/organism/ProductsGrid";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ROUTES } from "routes/constants";
-import { useAppSelector } from "store/hooks";
-import { RootState } from "store/store";
+import UserCreateProduct from "components/organism/userCreateProducts";
+import OrdersGrid from "components/organism/OrdersGrid";
+import { Order } from "interfaces/orders";
+import ProductGrid from "components/organism/ProductsGrid";
 
 interface Props {
-  products: Product[];
+  products?: Product[];
+  orders?: Order[];
   onAddDelete: (product: Product) => void;
   handleAddOrder?: () => void;
 }
 
 const drawerWidth = 300;
 
-const DashboardLayout: React.FC<Props> = ({
-  products,
-  onAddDelete,
-  handleAddOrder,
-}) => {
+const DashboardWaiterLayout: React.FC<Props> = ({ products, orders }) => {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const categories = ["Productos", "Agregados"];
-  const location = useLocation();
-
-  const { totalToPay } = useAppSelector((state: RootState) => {
-    return state.products;
-  });
+  const categories = ["Productos", "Ordenes"];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -50,16 +43,20 @@ const DashboardLayout: React.FC<Props> = ({
   const handleCategorySelect = (category: string) => {
     switch (category) {
       case "Productos":
-        navigate(ROUTES.PRODUCTS_PAGE);
+        navigate(ROUTES.WAITER_PRODUCTS_PAGE);
         return;
-      case "Agregados":
-        navigate(ROUTES.PRODUCTS_ADDED_PAGE);
+      case "Ordenes":
+        navigate(ROUTES.WAITER_ORDERS_PAGE);
         return;
     }
   };
 
   const drawer = (
-    <Sidebar categories={categories} onCategorySelect={handleCategorySelect} />
+    <Sidebar
+      categories={categories}
+      onCategorySelect={handleCategorySelect}
+      textOut="Cerrar Sesión"
+    />
   );
 
   return (
@@ -124,16 +121,17 @@ const DashboardLayout: React.FC<Props> = ({
           width: { md: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <ProductGrid
-          products={products}
-          handleAddDelete={onAddDelete}
-          categorie={location.pathname === ROUTES.PRODUCTS_ADDED_PAGE ? 2 : 1}
-          totalToPay={totalToPay}
-          handleCreateBuy={handleAddOrder}
+        <UserCreateProduct
+          userName="Cristian Tobar"
+          onCreateProduct={() => {}}
         />
+        {products && (
+          <ProductGrid products={products} categorie={1} disableAdd={true} />
+        )}
+        {orders && <OrdersGrid orders={orders} handleShowProducts={() => {}} />}
       </Box>
     </Box>
   );
 };
 
-export default DashboardLayout;
+export default DashboardWaiterLayout;

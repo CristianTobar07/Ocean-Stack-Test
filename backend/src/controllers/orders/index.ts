@@ -80,10 +80,23 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     const data = await ordersModel.findById(uid);
+
     if (data === null) {
       res.status(404).json({ status: "false", msg: "Orden no encontrada" });
     } else {
-      res.status(200).json({ status: "true", data });5
+      const productUids = data.products.map((p) => p.uid);
+      const products = await productsModel.find({ _id: { $in: productUids } });
+
+      const newProducts = products.map((p, index) => {
+        return {
+          uid: p._id,
+          name: p.name,
+          price: p.price,
+          quantity: data.products[index].quantity,
+        };
+      });
+
+      res.status(200).json({ status: "true", data: newProducts });
     }
   } catch (err) {
     next(err);

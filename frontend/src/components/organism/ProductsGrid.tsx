@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
-import ProductCard from "components/molecules/ProductsCard";
+import ProductCard from "components/molecules/ProductCard";
 import { Product } from "interfaces/products";
 import bgImage from "assets/bacground.webp";
 import ProductAddedCard from "components/molecules/ProductsAddedCard";
@@ -8,18 +8,20 @@ import OrderSummary from "components/molecules/OrdersSummary";
 
 interface Props {
   products: Product[];
-  handleAddDelete: (product: Product) => void;
+  handleAddDelete?: (product: Product) => void;
   categorie: number;
-  totalToPay: number;
+  totalToPay?: number;
   handleCreateBuy?: () => void;
+  disableAdd?: boolean;
 }
 
 const ProductGrid: React.FC<Props> = ({
   products,
-  handleAddDelete,
+  handleAddDelete = () => {},
   categorie,
-  totalToPay,
-  handleCreateBuy,
+  totalToPay = 0,
+  handleCreateBuy = () => {},
+  disableAdd = false,
 }) => (
   <Box
     sx={{
@@ -40,6 +42,7 @@ const ProductGrid: React.FC<Props> = ({
                 <ProductCard
                   product={product}
                   onAdd={() => handleAddDelete(product)}
+                  disableAdd={disableAdd}
                 />
               ) : (
                 <ProductAddedCard

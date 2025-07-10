@@ -8,9 +8,14 @@ import { ROUTES } from "routes/constants";
 interface Props {
   categories: string[];
   onCategorySelect: (category: string) => void;
+  textOut?: string;
 }
 
-const Sidebar: React.FC<Props> = ({ categories, onCategorySelect }) => {
+const Sidebar: React.FC<Props> = ({
+  categories,
+  onCategorySelect,
+  textOut = "Salir",
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -40,7 +45,7 @@ const Sidebar: React.FC<Props> = ({ categories, onCategorySelect }) => {
           startIcon={<HomeIcon />}
           onClick={() => navigate(ROUTES.LANDING_PAGE)}
         >
-          Salir
+          {textOut}
         </Button>
       </Box>
     </Box>

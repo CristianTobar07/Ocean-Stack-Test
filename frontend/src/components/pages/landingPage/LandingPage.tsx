@@ -49,7 +49,11 @@ const LandingPage = () => {
           >
             Crear Orden
           </Button>
-          <Button variant="contained" color="inherit">
+          <Button
+            variant="contained"
+            color="inherit"
+            onClick={() => navigate(ROUTES.LOGIN_PAGE)}
+          >
             Iniciar Sesión
           </Button>
         </Box>
