@@ -9,6 +9,7 @@ import { getAllOrders, setIsModalProducts } from "store/slices/orders";
 import { createProduct } from "store/slices/products";
 import { RootState } from "store/store";
 import ProductsOfOrder from "components/organism/ProductsOfOrder";
+import ImageModal from "assets/modalOrders.webp";
 
 const dashboardOrdersWaiterPage = () => {
   const dispatch = useAppDispatch();
@@ -50,9 +51,10 @@ const dashboardOrdersWaiterPage = () => {
         open={isModalProducts}
         title="Listado de Productos"
         onClose={handleCloseModal}
+        backgroundImage={ImageModal}
       >
         <ProductsOfOrder />
-      </ReusableModal>{" "}
+      </ReusableModal>
     </>
   );
 };

@@ -17,6 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "routes/constants";
 import { useAppSelector } from "store/hooks";
 import { RootState } from "store/store";
+import { categoriesClients } from "common/constants";
 
 interface Props {
   products: Product[];
@@ -36,7 +37,6 @@ const DashboardLayout: React.FC<Props> = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const categories = ["Productos", "Agregados"];
   const location = useLocation();
 
   const { totalToPay } = useAppSelector((state: RootState) => {
@@ -59,7 +59,10 @@ const DashboardLayout: React.FC<Props> = ({
   };
 
   const drawer = (
-    <Sidebar categories={categories} onCategorySelect={handleCategorySelect} />
+    <Sidebar
+      categories={categoriesClients}
+      onCategorySelect={handleCategorySelect}
+    />
   );
 
   return (

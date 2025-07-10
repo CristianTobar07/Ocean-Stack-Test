@@ -23,6 +23,7 @@ import { useAppDispatch } from "store/hooks";
 import toast from "react-hot-toast";
 import { createProduct, setReloadProducts } from "store/slices/products";
 import { getOrderById, setIsModalProducts } from "store/slices/orders";
+import { categoriesWaiters } from "common/constants";
 
 interface Props {
   products?: Product[];
@@ -42,12 +43,9 @@ const DashboardWaiterLayout: React.FC<Props> = ({
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [openModalProductsOfOrder, setopenModalProductsOfOrder] =
-    useState(true);
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
-  const categories = ["Productos", "Ordenes"];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -88,7 +86,7 @@ const DashboardWaiterLayout: React.FC<Props> = ({
 
   const drawer = (
     <Sidebar
-      categories={categories}
+      categories={categoriesWaiters}
       onCategorySelect={handleCategorySelect}
       textOut="Cerrar Sesión"
     />

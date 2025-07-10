@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Box,
 } from "@mui/material";
 
 interface ReusableModalProps {
@@ -15,6 +16,7 @@ interface ReusableModalProps {
   onClose: () => void;
   onConfirm?: () => void;
   confirmText?: string;
+  backgroundImage?: string;
 }
 
 export const ReusableModal: React.FC<ReusableModalProps> = ({
@@ -24,21 +26,48 @@ export const ReusableModal: React.FC<ReusableModalProps> = ({
   onClose,
   onConfirm,
   confirmText = "Guardar",
+  backgroundImage,
 }) => {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>{title}</DialogTitle>
-      <DialogContent>{children}</DialogContent>
-      <DialogActions>
-        <Button sx={{ color: "#7c4dff" }} onClick={onClose}>
-          Cancelar
-        </Button>
-        {onConfirm && (
-          <Button variant="contained" onClick={onConfirm}>
-            {confirmText}
+      <Box
+        sx={{
+          backgroundImage: backgroundImage
+            ? `url(${backgroundImage})`
+            : undefined,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <DialogTitle
+          sx={{
+            color: backgroundImage ? "#fff" : "inredsherit",
+            textAlign: "center",
+            mb: 0,
+            pb: 0,
+          }}
+        >
+          {title}
+        </DialogTitle>
+        <DialogContent>{children}</DialogContent>
+        <DialogActions>
+          <Button
+            sx={
+              backgroundImage
+                ? { background: "#7c4dff", color: "white" }
+                : { color: "#7c4dff" }
+            }
+            onClick={onClose}
+          >
+            Cerrar
           </Button>
-        )}
-      </DialogActions>
+          {onConfirm && (
+            <Button variant="contained" onClick={onConfirm}>
+              {confirmText}
+            </Button>
+          )}
+        </DialogActions>
+      </Box>
     </Dialog>
   );
 };

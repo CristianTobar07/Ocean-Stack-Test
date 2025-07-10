@@ -79,8 +79,6 @@ const Delete = async (req: Request, res: Response, next: NextFunction) => {
 
     const data = await productsModel.findByIdAndDelete(uid);
 
-    console.log({ data });
-
     if (data === null) {
       res.status(404).json({ status: false, msg: "Producto no encontrado" });
     } else {

@@ -4,9 +4,10 @@ import ProductButton from "components/atoms/ProductButton";
 import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "routes/constants";
+import { SidebarCategories } from "interfaces/sidebarCategories";
 
 interface Props {
-  categories: string[];
+  categories: SidebarCategories[];
   onCategorySelect: (category: string) => void;
   textOut?: string;
 }
@@ -32,8 +33,8 @@ const Sidebar: React.FC<Props> = ({
       {categories.map((cat, i) => (
         <ProductButton
           key={i}
-          label={cat}
-          onClick={() => onCategorySelect(cat)}
+          category={cat}
+          onClick={() => onCategorySelect(cat.name)}
         />
       ))}
 
