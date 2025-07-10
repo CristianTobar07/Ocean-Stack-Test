@@ -1,13 +1,25 @@
 import React from "react";
-import { Paper, Typography, Button, Stack } from "@mui/material";
+import { Paper, Typography, Button } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { ReusableModal } from "./Modal";
+import { CreateProductForm } from "./CreateProductForm/CreateProductForm";
+import { ProductFormType } from "interfaces/products";
 
 interface Props {
   userName: string;
-  onCreateProduct: () => void;
+  handleCreateProduct: (product: ProductFormType) => void;
+  openModal: boolean;
+  setModal: (value: boolean) => void;
+  buttonName: string;
 }
 
-const UserCreateProduct: React.FC<Props> = ({ userName, onCreateProduct }) => {
+const UserCreateProduct: React.FC<Props> = ({
+  userName,
+  buttonName,
+  handleCreateProduct,
+  openModal,
+  setModal,
+}) => {
   return (
     <Paper
       elevation={3}
@@ -27,11 +39,19 @@ const UserCreateProduct: React.FC<Props> = ({ userName, onCreateProduct }) => {
       <Button
         variant="contained"
         color="inherit"
-        onClick={onCreateProduct}
+        onClick={() => setModal(!openModal)}
         startIcon={<AddCircleOutlineIcon />}
       >
-        Crear nuevo producto
+        {buttonName}
       </Button>
+
+      <ReusableModal
+        open={openModal}
+        title="Crear nuevo producto"
+        onClose={() => setModal(false)}
+      >
+        <CreateProductForm onSubmit={handleCreateProduct} />
+      </ReusableModal>
     </Paper>
   );
 };

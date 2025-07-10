@@ -37,8 +37,11 @@ const dashboardProductsWaiterPage = () => {
     toast.success("Producto agregado correctamente");
   };
 
+  if (!dataUser) return null;
+
   return (
     <DashboardWaiterLayout
+      dataUser={dataUser}
       products={products}
       orders={[]}
       onAddDelete={handleAddProduct}

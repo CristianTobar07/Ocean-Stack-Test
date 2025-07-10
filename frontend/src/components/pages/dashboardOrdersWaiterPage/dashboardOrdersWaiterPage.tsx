@@ -1,9 +1,11 @@
 import DashboardWaiterLayout from "components/templates/DashboardWaiterLayout";
-import { Product } from "interfaces/products";
+import { Product, ProductFormType } from "interfaces/products";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { getDataUser } from "store/slices/auth";
 import { getAllOrders } from "store/slices/orders";
+import { createProduct } from "store/slices/products";
 import { RootState } from "store/store";
 
 const dashboardOrdersWaiterPage = () => {
@@ -31,11 +33,9 @@ const dashboardOrdersWaiterPage = () => {
     }
   }, [dispatch, isReloadNeededAuth, dataUser]);
 
-  const handleAddProduct = (order: Product) => {};
+  if (!dataUser) return null;
 
-  return (
-    <DashboardWaiterLayout orders={orders} onAddDelete={handleAddProduct} />
-  );
+  return <DashboardWaiterLayout dataUser={dataUser} orders={orders} />;
 };
 
 export default dashboardOrdersWaiterPage;

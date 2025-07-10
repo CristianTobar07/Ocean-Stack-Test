@@ -2,7 +2,11 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AppThunk } from "store/store";
 import { displayLoader, removeProcess } from "./loading";
 import * as Api from "Api/products";
-import { Product, ResponseGetAllProducts } from "interfaces/products";
+import {
+  Product,
+  ProductFormType,
+  ResponseGetAllProducts,
+} from "interfaces/products";
 import { ProductsOrder, ResponseOrder } from "interfaces/orders";
 
 type InitialState = {
@@ -21,6 +25,9 @@ export const slice = createSlice({
   name: "suscription",
   initialState,
   reducers: {
+    setReloadProducts: (state) => {
+      state.isRealoadNeeded = true;
+    },
     setProducts: (state, action: PayloadAction<Product[]>) => {
       state.products = action.payload;
       state.isRealoadNeeded = false;
@@ -59,8 +66,12 @@ export const slice = createSlice({
   },
 });
 
-export const { setAddProduct, setDeleteProduct, resetProductsAdded } =
-  slice.actions;
+export const {
+  setReloadProducts,
+  setAddProduct,
+  setDeleteProduct,
+  resetProductsAdded,
+} = slice.actions;
 
 export default slice.reducer;
 
@@ -76,6 +87,20 @@ export const getAllProducts = (): AppThunk => async (dispatch) => {
     return false;
   }
 };
+
+export const createProduct =
+  (product: ProductFormType): AppThunk =>
+  async (dispatch) => {
+    const idProcess: string = dispatch(displayLoader());
+    try {
+      const response: ResponseGetAllProducts = await Api.createProduct(product);
+      dispatch(removeProcess(idProcess));
+      return response;
+    } catch (error: any) {
+      dispatch(removeProcess(idProcess));
+      return false;
+    }
+  };
 
 export const createOrder = (): AppThunk => async (dispatch, getState) => {
   const idProcess: string = dispatch(displayLoader());

@@ -3,9 +3,12 @@ export interface ResponseGetAllProducts {
   status: boolean;
 }
 
-export interface Product {
+export interface Product extends ProductFormType {
+  uid: string;
+}
+
+export interface ProductFormType {
   name: string;
   price: number;
   quantity: number;
-  uid: string;
 }
