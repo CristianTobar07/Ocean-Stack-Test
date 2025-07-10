@@ -69,14 +69,14 @@ export const validatePassword = (
 ) => {
   const { password } = req.body;
 
-  if (password.length < 6 || password.length > 50) {
+  if (password.length < 6 || password.length > 18) {
     return res.status(400).json({
       status: false,
-      msg: "La contraseña debe tener mínimo 6 a 50 caracteres",
+      msg: "La contraseña debe tener mínimo 6 a 18 caracteres",
     });
   }
 
-  const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,50}$/;
+  const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,18}$/;
 
   if (!regexPassword.test(password)) {
     return res.status(400).json({

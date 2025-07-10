@@ -28,7 +28,7 @@ routerProducts.post(
   ],
   create
 );
-routerProducts.get("/products", [validateJWT], getAll);
+routerProducts.get("/products", getAll);
 
 routerProducts.get(
   "/products/:id",

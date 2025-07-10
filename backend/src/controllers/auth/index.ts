@@ -18,7 +18,7 @@ export const authLogin = async (
     const user = await userModel.findOne({ email });
     if (!user) {
       return res.status(400).json({
-        status: "false",
+        status: false,
         msg: "Usuario o contraseña incorrecto",
       });
     }
@@ -27,14 +27,14 @@ export const authLogin = async (
 
     if (!validPassword) {
       return res.status(400).json({
-        status: "false",
-        msg: "Usuario o contraseña incorrecto",
+        status: false,
+        msg: "Usuario o contraseña incorrectos",
       });
     }
 
     const token = await generateJWT(user.id);
 
-    res.status(200).json({ status: "true", user, token });
+    res.status(200).json({ status: true, user, token });
   } catch (err) {
     next(err);
   }
