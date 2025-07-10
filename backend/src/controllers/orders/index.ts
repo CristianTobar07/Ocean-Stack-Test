@@ -23,14 +23,14 @@ const create = async (
       const productFound = await productsModel.findById(product.uid);
       if (!productFound) {
         return res.status(404).json({
-          status: "false",
+          status: false,
           msg: `El Producto '${product.uid}' no fue encontrado. Por favor eliminelo de la orden y vuelva a intentarlo`,
         });
       }
 
       if (productFound.quantity < product.quantity) {
         return res.status(400).json({
-          status: "false",
+          status: false,
           msg: `Solo hay ${productFound.quantity} unidades disponibles de producto: '${productFound.name}'`,
         });
       }
@@ -47,10 +47,10 @@ const create = async (
       }
       res
         .status(201)
-        .json({ status: "true", msg: "Orden creada exitosamente" });
+        .json({ status: true, msg: "Orden creada exitosamente" });
     } else {
       res.status(500).json({
-        status: "true",
+        status: true,
         msg: "Error al crear la orden, intentelo más tarde",
       });
     }
@@ -62,7 +62,7 @@ const create = async (
 
 const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = await ordersModel.find();
+    const data = await ordersModel.find().sort({ date: -1 }); // -1 para descendente (más reciente primero)
     res.status(200).json({ status: true, data });
   } catch (err) {
     next(err);
@@ -80,10 +80,23 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     const data = await ordersModel.findById(uid);
+
     if (data === null) {
-      res.status(404).json({ status: "false", msg: "Orden no encontrada" });
+      res.status(404).json({ status: false, msg: "Orden no encontrada" });
     } else {
-      res.status(200).json({ status: "true", data });5
+      const productUids = data.products.map((p) => p.uid);
+      const products = await productsModel.find({ _id: { $in: productUids } });
+
+      const newProducts = products.map((p, index) => {
+        return {
+          uid: p._id,
+          name: p.name,
+          price: p.price,
+          quantity: data.products[index].quantity,
+        };
+      });
+
+      res.status(200).json({ status: true, data: newProducts });
     }
   } catch (err) {
     next(err);

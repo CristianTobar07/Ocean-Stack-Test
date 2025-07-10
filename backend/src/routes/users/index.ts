@@ -24,4 +24,4 @@ routerUsers.post(
   ],
   UsersController.createUser
 );
-routerUsers.get("/user/:id", [validateJWT], UsersController.getUserById);
+routerUsers.get("/user", validateJWT, UsersController.getUserById);
