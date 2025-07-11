@@ -17,10 +17,11 @@ Aplicación web para la gestión de productos y órdenes en un restaurante.
    git clone <url-del-repositorio>
 2. Dentro de la carpeta del backend, copia el archivo .env.template y renómbralo a .env.
 3. Dentro de la carpeta del frontend, copia el archivo .env.template y renómbralo a .env.
-4. Inicia Docker Desktop.
+4. Ejecutar Docker Desktop antes de continuar con el paso 5.
 5. Desde la raíz del proyecto, ejecuta el siguiente comando: `docker compose up --build -d`
 6. Verifica en Docker Desktop que los contenedores estén corriendo.
 7. Accede a la aplicación desde tu navegador en: `http://localhost:8080`
+8. Para visualizar las ordenes, inicie sesión con un mesero (Puede registrar uno usando la Api descrita en Postman o usar las credenciales especificadas vía correo electrónico).
 
 # 💻 Ejecución del Proyecto de Forma Local
 

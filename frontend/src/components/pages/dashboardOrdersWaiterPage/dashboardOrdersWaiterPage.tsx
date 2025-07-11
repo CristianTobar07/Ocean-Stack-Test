@@ -1,12 +1,9 @@
 import { ReusableModal } from "components/organism/Modal";
 import DashboardWaiterLayout from "components/templates/DashboardWaiterLayout";
-import { Product, ProductFormType } from "interfaces/products";
 import { useEffect } from "react";
-import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { getDataUser } from "store/slices/auth";
 import { getAllOrders, setIsModalProducts } from "store/slices/orders";
-import { createProduct } from "store/slices/products";
 import { RootState } from "store/store";
 import ProductsOfOrder from "components/organism/ProductsOfOrder";
 import ImageModal from "assets/modalOrders.webp";
@@ -27,16 +24,16 @@ const dashboardOrdersWaiterPage = () => {
   );
 
   useEffect(() => {
-    if (orders.length === 0 || isRealoadNeeded) {
+    if (isRealoadNeeded) {
       dispatch(getAllOrders());
     }
-  }, [dispatch, isRealoadNeeded, orders]);
+  }, [dispatch, isRealoadNeeded]);
 
   useEffect(() => {
-    if (!dataUser || isReloadNeededAuth) {
+    if (isReloadNeededAuth) {
       dispatch(getDataUser());
     }
-  }, [dispatch, isReloadNeededAuth, dataUser]);
+  }, [dispatch, isReloadNeededAuth]);
 
   const handleCloseModal = () => {
     dispatch(setIsModalProducts(false));

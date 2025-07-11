@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 import { getAllProducts, setAddProduct } from "store/slices/products";
 import { RootState } from "store/store";
 
-const allProducts: Product[] = [];
 
 const DashboardProductsPage = () => {
   const dispatch = useAppDispatch();
@@ -16,10 +15,10 @@ const DashboardProductsPage = () => {
   });
 
   useEffect(() => {
-    if (products.length === 0 || isRealoadNeeded) {
+    if (isRealoadNeeded) {
       dispatch(getAllProducts());
     }
-  }, [dispatch, isRealoadNeeded, products]);
+  }, [dispatch, isRealoadNeeded]);
 
   const handleAddProduct = (product: Product) => {
     dispatch(setAddProduct(product));
