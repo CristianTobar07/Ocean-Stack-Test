@@ -21,7 +21,7 @@ import ProductGrid from "components/organism/ProductsGrid";
 import { DataUser } from "interfaces/auth";
 import { useAppDispatch } from "store/hooks";
 import toast from "react-hot-toast";
-import { createProduct, setReloadProducts } from "store/slices/products";
+import { createProduct, getAllProducts } from "store/slices/products";
 import { getOrderById, setIsModalProducts } from "store/slices/orders";
 import { categoriesWaiters } from "common/constants";
 
@@ -71,7 +71,7 @@ const DashboardWaiterLayout: React.FC<Props> = ({
     }
     setOpenModal(false);
     toast.success(res.msg);
-    dispatch(setReloadProducts());
+    dispatch(getAllProducts());
   };
 
   const handleShowProducts = async (order: Order) => {
